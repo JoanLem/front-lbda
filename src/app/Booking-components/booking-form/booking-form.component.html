@@ -1,0 +1,111 @@
+<div *ngIf="loading"><mat-spinner></mat-spinner></div>
+<div *ngIf="!loading" class="demo-button-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Agenda tu cita</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <br />
+    <mat-card-content>
+      <form [formGroup]="formulario" (ngSubmit)="crearCita()">
+        <!-- Select para el barbero -->
+        <mat-card-subtitle>1. Seleccione el barbero</mat-card-subtitle>
+        <section class="select-barber">
+          <mat-form-field>
+            <mat-label>Seleccione Barbero</mat-label>
+            <mat-select formControlName="barbero">
+              <!-- <mat-option [value]="0">Cualquier barbero</mat-option>  -->
+              <mat-option *ngFor="let barber of barberList" [value]="barber">{{
+                barber.name
+              }}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="formulario.controls['barbero'].hasError('required')"
+            >
+              El barbero es requerido.
+            </mat-error>
+            {{ barberSelected.id }}
+          </mat-form-field>
+          <mat-icon
+            *ngIf="barberSelected != null"
+            [ngStyle]="{ 'background-color': barberSelected.color }"
+          >
+            <img [src]="barberSelected.image_url" alt="" />
+          </mat-icon>
+        </section>
+
+        <!-- Datapicker para la fecha  -->
+        <mat-card-subtitle>2. Indicanos el dia y la hora</mat-card-subtitle>
+        <section *ngIf="barberSelected !== ''">
+          <mat-form-field>
+            <mat-label>Seleccione un dia</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="daySelected"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <!-- select para la hora  -->
+          <mat-form-field>
+            <mat-label>Horas disponibles</mat-label>
+            <mat-select formControlName="horaCita">
+              <mat-option
+                *ngFor="let timeReal of horaCitaList"
+                [value]="timeReal"
+                >{{ timeReal.timeReal | date : "shortTime" }}
+              </mat-option>
+            </mat-select></mat-form-field
+          >
+        </section>
+
+        <!-- seccion para el datos del cliente -->
+        <mat-card-subtitle>3. Tus Datos</mat-card-subtitle>
+        <section *ngIf="horaCitaSelected !== ''">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="nombre de cliente"
+              formControlName="cliente"
+            />
+            <mat-error
+              *ngIf="formulario.controls['cliente'].hasError('required')"
+            >
+              El nombre es requerido.
+            </mat-error>
+            <mat-error
+              *ngIf="formulario.controls['cliente'].hasError('minlength')"
+            >
+              El nombre debe tener al menos 10 caracteres.
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="whatsapp" formControlName="phone" />
+            <mat-error
+              *ngIf="formulario.controls['phone'].hasError('required')"
+            >
+              El telefono es requerido.
+            </mat-error>
+            <mat-error
+              *ngIf="formulario.controls['phone'].hasError('minlength')"
+            >
+              El telefono debe tener al menos 10 caracteres.
+            </mat-error>
+          </mat-form-field>
+        </section>
+
+        <mat-card-actions align="end">
+          <button mat-flat-button color="accent" (click)="irAWhatsApp()">
+            Ir a WhatsApp
+          </button>
+
+          <button mat-flat-button color="primary" type="submit">Agendar</button>
+        </mat-card-actions>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

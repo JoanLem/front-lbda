@@ -1,0 +1,145 @@
+<div *ngIf="loading"><mat-spinner></mat-spinner></div>
+<div *ngIf="!loading" class="demo-button-container">
+  <app-booking-form></app-booking-form>
+
+  <br />
+
+  <!-- <form [formGroup]="formulario" (ngSubmit)="crearNuevoDato()">
+    <mat-form-field>
+      <mat-label>Seleccione Barbero</mat-label>
+      <mat-select formControlName="barbero">
+  
+        <mat-option *ngFor="let barber of barberList" [value]="barber.id">{{
+          barber.name
+        }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="formulario.controls['phone'].hasError('required')">
+        El barbero es requerido.
+      </mat-error>
+    </mat-form-field>
+    {{ barberSelected }}
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="day" />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Horas disponibles</mat-label>
+      <mat-select formControlName="horaCita">
+        <mat-option *ngFor="let hora of horaCitaList" [value]="hora.timeReal">{{
+          hora.hora
+        }}</mat-option>
+      </mat-select></mat-form-field
+    >
+
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input matInput placeholder="cliente" formControlName="cliente" />
+      <mat-error *ngIf="formulario.controls['cliente'].hasError('required')">
+        El nombre es requerido.
+      </mat-error>
+      <mat-error *ngIf="formulario.controls['cliente'].hasError('minlength')">
+        El nombre debe tener al menos 10 caracteres.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="telefono" formControlName="phone" />
+      <mat-error *ngIf="formulario.controls['phone'].hasError('required')">
+        El telefono es requerido.
+      </mat-error>
+      <mat-error *ngIf="formulario.controls['phone'].hasError('minlength')">
+        El telefono debe tener al menos 10 caracteres.
+      </mat-error>
+    </mat-form-field>
+
+    <section>
+      <div class="example-button-row">
+        <button mat-flat-button color="primary" type="submit">Guardar</button>
+      </div>
+    </section>
+  </form>
+  <mat-divider></mat-divider> -->
+
+  <!-- filtro para tabla -->
+  <form [formGroup]="filtro" (ngSubmit)="filtrar()">
+    <mat-form-field>
+      <mat-label>Seleccione un dia</mat-label>
+      <input matInput [matDatepicker]="fecha" formControlName="dayFilter" />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="fecha"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #fecha></mat-datepicker>
+    </mat-form-field>
+    <button mat-flat-button color="primary" type="submit">Buscar</button>
+  </form>
+  {{ daySelected | date : "longDate" }}
+  <!-- Tabla de agenda -->
+  <table
+    mat-table
+    [dataSource]="appointmentList"
+    class="mat-elevation-z8 demo-table"
+  >
+    <!-- Name Column -->
+    <ng-container matColumnDef="barbero">
+      <th mat-header-cell *matHeaderCellDef>Barbero</th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        [ngStyle]="{ 'background-color': element.barber.color }"
+      >
+        {{ element.barber.name }}
+      </td>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="hora">
+      <th mat-header-cell *matHeaderCellDef>Hora</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.timeStart | date : "shortTime" }}
+      </td>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="cliente">
+      <th mat-header-cell *matHeaderCellDef>Cliente</th>
+      <td mat-cell *matCellDef="let element">{{ element.client.name }}</td>
+    </ng-container>
+    <!-- Position Column -->
+    <ng-container matColumnDef="telefono">
+      <th mat-header-cell *matHeaderCellDef>telefono</th>
+      <td mat-cell *matCellDef="let element">{{ element.client.phone }}</td>
+    </ng-container>
+
+    <!-- options Column -->
+    <ng-container matColumnDef="options">
+      <th mat-header-cell *matHeaderCellDef>Options</th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          mat-icon-button
+          class="example-icon"
+          aria-label="update"
+          (click)="updateData(element)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          class="example-icon"
+          aria-label="delete"
+          (click)="deleteData(element.id)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
