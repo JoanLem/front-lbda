@@ -4,7 +4,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable, ReplaySubject } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
-import { RickService } from './rick.service';
+import { RickService } from '../services/rick.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -18,7 +18,7 @@ import {
 } from '@angular/forms';
 
 @Component({
-  selector: 'app-booking-list',
+  selector: 'app-barber-master',
   standalone: true,
   imports: [
     CommonModule,
@@ -31,10 +31,10 @@ import {
     ReactiveFormsModule,
     MatDividerModule,
   ],
-  templateUrl: './booking-list.component.html',
-  styleUrl: './booking-list.component.css',
+  templateUrl: './barber-master.component.html',
+  styleUrl: './barber-master.component.css',
 })
-export class BookingListComponent {
+export class BarberMasterComponent {
   displayedColumns: string[] = ['id', 'name', 'options'];
   idActualizar: number | undefined;
   idEliminar: number | undefined;
@@ -53,14 +53,12 @@ export class BookingListComponent {
   async loadData() {
     try {
       await this.dataService.getData().then((data: any) => {
-        console.log('Data desde componente: ' + data.data);
         this.barberList = data.data;
         this.loading = false;
       });
     } catch (error) {
       console.error('Error al cargar datos:', error);
     }
-    console.log('loadData' + this.barberList);
   }
 
   async createData() {

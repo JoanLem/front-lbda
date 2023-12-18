@@ -1,13 +1,13 @@
-<div *ngIf="loading"><mat-spinner></mat-spinner></div>
-<div *ngIf="!loading" class="demo-button-container">
+<div *ngIf="loading"><app-loader></app-loader></div>
+<div *ngIf="!loading">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Agenda tu cita</mat-card-title>
+      <mat-card-title>{{titulo}}</mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
     <br />
     <mat-card-content>
-      <form [formGroup]="formulario" (ngSubmit)="crearCita()">
+      <form *ngIf="!flatAlerta" [formGroup]="formulario" (ngSubmit)="crearCita()">
         <!-- Select para el barbero -->
         <mat-card-subtitle>1. Seleccione el barbero</mat-card-subtitle>
         <section class="select-barber">
@@ -17,21 +17,23 @@
               <!-- <mat-option [value]="0">Cualquier barbero</mat-option>  -->
               <mat-option *ngFor="let barber of barberList" [value]="barber">{{
                 barber.name
-              }}</mat-option>
+                }}</mat-option>
             </mat-select>
-            <mat-error
-              *ngIf="formulario.controls['barbero'].hasError('required')"
-            >
+
+            <mat-error *ngIf="formulario.controls['barbero'].hasError('required')">
               El barbero es requerido.
             </mat-error>
-            {{ barberSelected.id }}
           </mat-form-field>
-          <mat-icon
-            *ngIf="barberSelected != null"
-            [ngStyle]="{ 'background-color': barberSelected.color }"
-          >
-            <img [src]="barberSelected.image_url" alt="" />
-          </mat-icon>
+          <section *ngIf="barberSelected !== ''; else profileDemo">
+            <mat-icon>
+              <img [src]="barberSelected.image_url" alt="image profile" />
+            </mat-icon>
+          </section>
+          <ng-template #profileDemo>
+            <mat-icon>
+              <img [src]="urlImgProfileDefault" alt="image profile demo" />
+            </mat-icon>
+          </ng-template>
         </section>
 
         <!-- Datapicker para la fecha  -->
@@ -39,73 +41,74 @@
         <section *ngIf="barberSelected !== ''">
           <mat-form-field>
             <mat-label>Seleccione un dia</mat-label>
-            <input
-              matInput
-              [matDatepicker]="picker"
-              formControlName="daySelected"
-            />
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
+            <input matInput [matDatepicker]="picker" formControlName="daySelected" />
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
           <!-- select para la hora  -->
           <mat-form-field>
             <mat-label>Horas disponibles</mat-label>
             <mat-select formControlName="horaCita">
-              <mat-option
-                *ngFor="let timeReal of horaCitaList"
-                [value]="timeReal"
-                >{{ timeReal.timeReal | date : "shortTime" }}
+              <mat-option *ngFor="let timeReal of horaCitaList" [value]="timeReal">{{ timeReal.timeReal | date :
+                "shortTime" }}
               </mat-option>
-            </mat-select></mat-form-field
-          >
+            </mat-select></mat-form-field>
         </section>
 
         <!-- seccion para el datos del cliente -->
         <mat-card-subtitle>3. Tus Datos</mat-card-subtitle>
         <section *ngIf="horaCitaSelected !== ''">
           <mat-form-field>
-            <input
-              matInput
-              placeholder="nombre de cliente"
-              formControlName="cliente"
-            />
-            <mat-error
-              *ngIf="formulario.controls['cliente'].hasError('required')"
-            >
-              El nombre es requerido.
+            <mat-label>WhatsApp / movil </mat-label>
+
+            <input matInput type="tel" placeholder="ej: 3001234567" formControlName="phone" />
+            <mat-error *ngIf="formulario.controls['phone'].hasError('required')">
+              Numero de contacto es requerido.
             </mat-error>
-            <mat-error
-              *ngIf="formulario.controls['cliente'].hasError('minlength')"
-            >
-              El nombre debe tener al menos 10 caracteres.
+            <mat-error *ngIf="formulario.controls['phone'].hasError('pattern')">
+              Numero de contacto debe ser solo numeros de 10 caracteres.
             </mat-error>
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="whatsapp" formControlName="phone" />
-            <mat-error
-              *ngIf="formulario.controls['phone'].hasError('required')"
-            >
-              El telefono es requerido.
+            <mat-label>Nombre y Apellido</mat-label>
+            <input matInput placeholder="ej: Will Smith" formControlName="cliente" />
+            <mat-error *ngIf="formulario.controls['cliente'].hasError('required')">
+              El nombre es requerido.
             </mat-error>
-            <mat-error
-              *ngIf="formulario.controls['phone'].hasError('minlength')"
-            >
-              El telefono debe tener al menos 10 caracteres.
+            <mat-error *ngIf="formulario.controls['cliente'].hasError('pattern')">
+              Asegurate de no incluir numeros o caracteres especiales, pon tu
+              nombre y apellido.
             </mat-error>
           </mat-form-field>
         </section>
-
-        <mat-card-actions align="end">
-          <button mat-flat-button color="accent" (click)="irAWhatsApp()">
-            Ir a WhatsApp
-          </button>
-
-          <button mat-flat-button color="primary" type="submit">Agendar</button>
+        <mat-divider></mat-divider>
+        <mat-card-actions>
+          <div class="button-form">
+            <button *ngIf="!flatAlerta" mat-flat-button color="accent" (click)="irAWhatsApp()">
+              Ir a WhatsApp
+            </button>
+            <button *ngIf="!flatAlerta" mat-flat-button color="primary" type="submit">
+              Agendar
+            </button>
+          </div>
         </mat-card-actions>
       </form>
+
+      <div *ngIf="flatAlerta">
+        <h2>Estimado {{clientSelected}} su cita quedo agendada para la fecha: {{daySelected |
+          date:"medium"}}, con tu
+          Barbero
+          {{barberSelected}} ,
+          Recuerda llegar puntal, Gracias por preferirnos!</h2>
+
+        <mat-card-actions>
+          <div class="button-form">
+            <button *ngIf="flatAlerta" mat-flat-button color="accent" (click)="cerrarDetalleCita()">
+              Cerrar
+            </button>
+          </div>
+        </mat-card-actions>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

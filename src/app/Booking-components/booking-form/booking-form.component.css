@@ -1,24 +1,114 @@
-section {
+/* Estilos generales */
+mat-card {
+  max-width: 700px; /* Ancho máximo del formulario */
+  margin: auto; /* Centrar el formulario en la página */
+  background-color: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* background-color: #000; */
+  border-radius: 5px;
+}
+
+/* Estilos para el encabezado del formulario */
+mat-card-header {
+  color: #fff;
+}
+/* Estilos para las secciones del formulario */
+.mat-card-subtitle {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+/* Estilos para el select del barbero */
+.select-barber {
   display: flex;
-  align-content: center;
-  justify-content: space-around;
-  padding: 1em;
-  /* background-color: darkgrey; */
-}
-mat-form-field {
-  padding: 0.5em;
+  align-items: center;
   /* background-color: aquamarine; */
+  flex-direction: row;
 }
+
+.select-barber i {
+  color: #ffcc00;
+}
+
+mat-form-field {
+  width: 49%;
+  margin-left: 1%;
+}
+
+/* Estilos para la imagen del barbero */
 mat-icon {
   display: flex;
-  align-content: center;
   justify-content: center;
-  height: 80px;
-  width: 80px;
-
-  /* background-color: brown; */
+  margin-left: 10px;
+  height: 100px;
+  width: 100px;
+  /* background-color: blanchedalmond; */
   border-radius: 50%;
 }
-mat-icon img {
-  height: auto;
+
+img {
+  /* width: 80px; Ajusta el tamaño según sea necesario */
+  /* height: 80px; */
+  /* height: auto; */
+  object-fit: cover;
+  width: 100%;
+  margin: auto;
+}
+
+/* Estilos para el datepicker y select de la hora */
+section {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+mat-datepicker-toggle {
+  cursor: pointer;
+}
+
+/* Estilos para la sección de datos del cliente */
+section:last-child {
+  margin-bottom: 0;
+}
+
+mat-card-actions {
+  width: 100%;
+  /* padding: 1.5em; */
+  /* background-color: #ffcc00; */
+  justify-content: flex-end; /* Alinea los elementos al final del contenedor */
+}
+
+/* Estilos para los botones del formulario */
+.button-form {
+  display: flex;
+  gap: 10px; /* Espacio entre los elementos */
+}
+
+/* Estilos específicos para tamaños de pantalla más pequeños */
+@media screen and (max-width: 600px) {
+  mat-card {
+    max-width: 100%; /* Ancho completo en pantallas pequeñas */
+  }
+
+  .select-barber {
+    flex-direction: column; /* Apila los elementos en pantallas pequeñas */
+  }
+
+  mat-icon {
+    margin-top: 3px; /* Espaciado superior para la imagen del barbero en pantallas pequeñas */
+    height: 90px;
+    width: 90px;
+  }
+  section {
+    flex-direction: column; /* Apila las secciones en pantallas pequeñas */
+  }
+
+  mat-form-field {
+    width: 100%; /* Ancho completo en pantallas pequeñas */
+    margin-bottom: 10px; /* Espaciado inferior entre campos */
+  }
+
+  .button-form {
+    margin-top: 5px;
+  }
 }

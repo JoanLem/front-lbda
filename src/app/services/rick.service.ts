@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AppConfig } from '../../enviroment-local';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +8,7 @@ import { AppConfig } from '../../enviroment-local';
 export class RickService {
   //apiUrl = 'https://6566a13664fcff8d730eebb1.mockapi.io/api/barbers';
   //apiUrl = 'http://localhost:8080/barbers';
-  apiUrl = AppConfig.apiUrl + AppConfig.port + AppConfig.path.barber;
+  apiUrl = environment.apiUrl + environment.port + environment.path.barber;
 
   // >>>>>>>>>>>>  Metodo traer toda la data
   async getData(): Promise<any> {

@@ -1,13 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AppConfig } from '../../enviroment-local';
+import { environment } from '../../environments/environment';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BookingService {
+export class ClientService {
   //apiUrl = 'https://6566a13664fcff8d730eebb1.mockapi.io/api/barbers';
-  apiUrl = AppConfig.apiUrl + AppConfig.port + AppConfig.path.apointment;
+  apiUrl = environment.apiUrl + environment.port + environment.path.client;
+  findClientByPhone = environment.method.findByPhone;
 
   // >>>>>>>>>>>>  Metodo traer toda la data
   async getData(date: any): Promise<any> {
@@ -48,6 +50,16 @@ export class BookingService {
   // >>>>>>>>>>>>  Metodo traer Especifico registro por id
   async getDataById(id: number): Promise<any> {
     const url = `${this.apiUrl}/${id}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Error al obtener datos por ID: ${response.statusText}`);
+    }
+    return response.json();
+  }
+
+  // >>>>>>>>>>>>  Metodo traer Especifico registro por id
+  async getClientByPhone(phone: String): Promise<any> {
+    const url = `${this.apiUrl}/${this.findClientByPhone}/${phone}`;
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Error al obtener datos por ID: ${response.statusText}`);
@@ -110,5 +122,13 @@ export class BookingService {
     if (!response.ok) {
       throw new Error(`Error al eliminar datos: ${response.statusText}`);
     }
+  }
+
+  private nuevoRegistroSubject = new Subject<void>();
+
+  nuevoRegistro$ = this.nuevoRegistroSubject.asObservable();
+
+  notificarNuevoRegistro(): void {
+    this.nuevoRegistroSubject.next();
   }
 }
