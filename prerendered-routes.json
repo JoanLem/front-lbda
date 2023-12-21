@@ -1,0 +1,7 @@
+{
+  "routes": [
+    "/agendar",
+    "/barbers",
+    "/booking"
+  ]
+}
