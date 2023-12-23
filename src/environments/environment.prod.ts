@@ -1,6 +1,6 @@
 // config.ts
 export const environment = {
-  apiUrl: 'http://prueba3-env.eba-dhzgu7bz.us-east-1.elasticbeanstalk.com',
+  apiUrl: 'http://bk-lbda-env.eba-axtn3vdb.us-east-1.elasticbeanstalk.com',
   port: '',
   path: {
     apointment: '/appointments',
