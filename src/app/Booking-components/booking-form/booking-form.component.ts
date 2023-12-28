@@ -87,7 +87,6 @@ export class BookingFormComponent {
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
     });
 
-    console.log('barbero inicial: ' + this.formulario.value.barbero);
     // Escuchar cambios en el FormControl 'barbero'
     this.formulario.get('barbero')?.valueChanges.subscribe((value) => {
       if (value !== '') {

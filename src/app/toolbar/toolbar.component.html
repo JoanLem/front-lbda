@@ -2,7 +2,8 @@
   <!-- Icono o título de la aplicación -->
   <span class="app-title">
     <!-- Puedes usar un icono en lugar del texto -->
-    <i class="fas fa-cut"></i> Facarta.com
+    <i class="fa-solid fa-calendar-days"> </i>
+    Facarta.com
   </span>
 
   <!-- Espaciador para empujar los elementos al lado derecho -->
@@ -10,7 +11,7 @@
 
   <!-- Menú de navegación -->
   <mat-nav-list class="nav-list" *ngIf="isLoggedIn">
-    <a mat-list-item routerLink="./">Inicio</a>
+    <a mat-list-item routerLink="/">Inicio</a>
     <a mat-list-item (click)="irARuta(1)">Agendar</a>
     <a mat-list-item (click)="irARuta(2)">Booking</a>
     <a mat-list-item (click)="irARuta(3)">Barberos</a>
