@@ -1,4 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Estilos para pantallas grandes */
+@media screen and (min-width: 768px) {
+  /* Estilos para pantallas más grandes, como tabletas y computadoras */
+  body {
+    font-size: 16px;
+  }
+}
+
+/* Estilos para pantallas pequeñas, como dispositivos móviles */
+@media screen and (max-width: 767px) {
+  body {
+    font-size: 14px;
+  }
+}

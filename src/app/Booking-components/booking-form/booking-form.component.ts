@@ -53,7 +53,7 @@ export class BookingFormComponent {
   appointmentList: any[] = [];
   barberList: any[] = [];
 
-  titulo = 'Agendar cita';
+  titulo = 'Agenda tu cita';
   flatAlerta = false;
   loading = true;
   formulario: FormGroup;
@@ -61,7 +61,7 @@ export class BookingFormComponent {
   daySelected = new Date();
   barberSelected: any = '';
   clientSelected: any = '';
-  numeroWhatsApp = '573002801952'; // Reemplaza con el número de WhatsApp al que deseas enviar mensajes
+  numeroWhatsApp = '573196073229'; // Reemplaza con el número de WhatsApp al que deseas enviar mensajes
   urlWhatsApp = `https://wa.me/${this.numeroWhatsApp}`;
 
   urlImgProfileDefault = `https://elasticbeanstalk-us-east-1-148301147089.s3.amazonaws.com/perfil+default.jpg`;
