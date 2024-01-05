@@ -1,5 +1,5 @@
 <div *ngIf="loading"><app-loader></app-loader></div>
-<div *ngIf="!loading" class="demo-button-container">
+<div *ngIf="!loading" class="main-container">
   <!-- Otro componente o template donde quieras usar la modal -->
   <div *ngIf="modal" class="modal-overlay">
     <div class="modal-container">
@@ -15,7 +15,7 @@
   </div>
   <!-- <app-booking-form *ngIf="modal"></app-booking-form> -->
   <!-- filtro para tabla -->
-  <div class="example-container">
+  <div class="filter-container">
     <form [formGroup]="filtro" (ngSubmit)="loadData()">
       <div>
         <label>Filtro: </label>
@@ -51,9 +51,8 @@
   </div>
 
   <div class="options">
-    <button mat-fab extended color="accent" (click)="modalNuevaCita()">
+    <button mat-fab color="accent" (click)="modalNuevaCita()">
       <mat-icon><i class="fa-sharp fa-solid fa-plus"></i></mat-icon>
-      Nueva cita
     </button>
   </div>
 
@@ -61,32 +60,51 @@
   <div class="tabla">
 
     <table mat-table [dataSource]="appointmentList" class="mat-elevation-z8">
-      <!-- Name Column -->
+      <!-- Time Column -->
+      <ng-container matColumnDef="hora">
+        <th mat-header-cell *matHeaderCellDef>{{daySelected | date : "fullDate" }}</th>
+        <td *matCellDef="let element" (click)="updateData(element)" mat-cell>
+          <div class="tr-citas">
+            <div class="td-detalles">
+              <div class="td-hora">
+                {{ element.timeStart | date : "shortTime" }}
+              </div>
+              <div class="td-barbero" [ngStyle]="{ 'background-color': element.barber.color }">
+                {{ element.barber.name }}
+              </div>
+              <div class="td-cliente">
+                {{ element.client.name }}
+              </div>
+            </div>
+            <div class="td-optiones">
+              <button mat-icon-button class="example-icon" aria-label="update" (click)="updateData(element)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+          </div>
+
+
+        </td>
+      </ng-container>
+      <!-- Barbero Column
       <ng-container matColumnDef="barbero">
         <th mat-header-cell *matHeaderCellDef>Barbero</th>
         <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background-color': element.barber.color }">
           {{ element.barber.name }}
         </td>
-      </ng-container>
+      </ng-container> -->
       <!-- Name Column -->
-      <ng-container matColumnDef="hora">
-        <th mat-header-cell *matHeaderCellDef>Hora</th>
-        <td mat-cell *matCellDef="let element">
-          {{ element.timeStart | date : "shortTime" }}
-        </td>
-      </ng-container>
-      <!-- Name Column -->
-      <ng-container matColumnDef="cliente">
+      <!-- <ng-container matColumnDef="cliente">
         <th mat-header-cell *matHeaderCellDef>Cliente</th>
         <td mat-cell *matCellDef="let element">{{ element.client.name }}</td>
-      </ng-container>
-      <!-- Position Column -->
+      </ng-container> -->
+      <!-- Telefono Column
       <ng-container matColumnDef="telefono">
         <th mat-header-cell *matHeaderCellDef>telefono</th>
         <td mat-cell *matCellDef="let element">{{ element.client.phone }}</td>
-      </ng-container>
+      </ng-container> -->
 
-      <!-- options Column -->
+      <!-- options Column
       <ng-container matColumnDef="options">
         <th mat-header-cell *matHeaderCellDef>Options</th>
         <td mat-cell *matCellDef="let element">
@@ -98,10 +116,10 @@
             <mat-icon>delete</mat-icon>
           </button>
         </td>
-      </ng-container>
+      </ng-container> -->
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" class="data"></tr>
     </table>
   </div>
 </div>

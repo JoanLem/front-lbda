@@ -1,15 +1,84 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .tabla {
   margin-bottom: 5em;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 80%;
+  /* border: 1px solid rgba(255, 255, 255, 0.2); */
 }
 
-.mat-elevation-z8 td {
-  background-color: #121212;
-  border-radius: 5px;
+/* .mat-elevation-z8 tr {
+  background-color: #e14e4e;
+  margin: 100px;
+  padding: 0;
+  
+} */
+.hora {
+  background-color: black;
+}
+
+.tr-citas {
+  display: flex;
+  justify-content: space-between;
+}
+.td-detalles {
+  display: flex;
+  /* background-color: blue; */
+  margin: 0;
+  padding: 0;
+  height: 2em;
+  align-items: center;
+  /* flex-direction: row; */
+}
+.td-optiones {
+  display: flex;
+  /* background-color: blue; */
+  margin: 0;
+  padding: 0;
+  height: 2em;
+  align-items: center;
+  /* flex-direction: row; */
+}
+.td-hora {
+  width: 4em;
+  padding: 0.5em 0;
+}
+.td-barbero {
+  display: flex;
+  justify-content: center;
+  width: 8em;
+  padding: 0.5em;
+}
+.td-cliente {
+  display: flex;
+  width: 10em;
+  padding: 0.5em 0;
+  justify-content: center;
+}
+
+tr.data {
+  background-color: black;
+  margin: 0;
+  padding: 0;
+  height: 3em;
+  /* background-color: aqua; */
+  /* color: aqua; */
+  /* background: whitesmoke; */
+  /* opacity: 0.5; */
+}
+
+tr.data :hover {
+  /* background-color: aqua; */
+  /* color: aqua; */
+  /* background: whitesmoke; */
+  opacity: 0.5;
 }
 
 /* div para el boton de nueva cita*/
 .options {
+  width: 80%;
   display: flex;
   justify-content: flex-end;
   margin-bottom: 1em;
@@ -17,32 +86,30 @@
 
 /*estilos para el filtro*/
 
-.example-container {
+.filter-container {
   border: 1px solid rgba(255, 255, 255, 0.2);
-  /* background-color: #000; */
   border-radius: 5px;
   margin: 24px 0;
   padding: 8px 8px 8px 16px;
-  /* color: #fff; */
 }
 
-.example-container mat-form-field + mat-form-field {
+.filter-container mat-form-field + mat-form-field {
   margin-left: 8px;
 }
 
-.example-container mat-form-field {
-  width: 220px;
+.filter-container mat-form-field {
+  width: 80%;
 }
 
-.example-container form {
+.filter-container form {
   margin-bottom: 20px;
 }
 
-.example-container form > * {
+.filter-container form > * {
   margin: 12px 0;
 }
 
-.example-container .mat-radio-button {
+.filter-container .mat-radio-button {
   margin: 0 12px;
 }
 
@@ -95,4 +162,32 @@
 .modal-body {
   /* max-width: 100%; */
   overflow-y: auto;
+}
+
+/* Estilos específicos para tamaños de pantalla más pequeños */
+@media screen and (max-width: 600px) {
+  .tabla {
+    margin-bottom: 5em;
+    width: 100%;
+    /* border: 1px solid rgba(255, 255, 255, 0.2); */
+  }
+  td,
+  th {
+    /* background-color: aqua; */
+    /* color: aqua; */
+    font-size: small;
+  }
+
+  .td-optiones {
+    display: none;
+  }
+
+  .filter-container {
+    width: 100%;
+    padding: 0.3em;
+  }
+  .example-form-fields {
+    align-items: center;
+    flex-direction: column;
+  }
 }

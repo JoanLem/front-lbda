@@ -59,14 +59,6 @@ import { ModalComponent } from '../../modal/modal.component';
   styleUrl: './booking-save.component.css',
 })
 export class BookingSaveComponent {
-  displayedColumns: string[] = [
-    'barbero',
-    'hora',
-    'cliente',
-    'telefono',
-    'options',
-  ];
-
   // injection services
   appoitmentService: BookingService = inject(BookingService);
   barberService: RickService = inject(RickService);
@@ -75,6 +67,7 @@ export class BookingSaveComponent {
   filtro: FormGroup;
   barberList: any[] = [];
   daySelected = format(new Date(), 'yyyy-MM-dd');
+  displayedColumns: string[] = ['hora'];
   barberSelected = 0;
 
   idActualizar: number | undefined;

@@ -58,7 +58,8 @@ export class BookingFormComponent {
   loading = true;
   formulario: FormGroup;
 
-  daySelected = new Date();
+  day = new Date();
+  daySelected = format(this.day, "yyyy-MM-dd'T'00:00:00");
   barberSelected: any = '';
   clientSelected: any = '';
   numeroWhatsApp = '573196073229'; // Reemplaza con el número de WhatsApp al que deseas enviar mensajes
@@ -70,6 +71,9 @@ export class BookingFormComponent {
   horaCitaSelected: any = '';
 
   constructor(private formBuilder: FormBuilder) {
+    console.log('barbero seleccionado: ' + this.barberSelected);
+    console.log('hora seleccionada: ' + this.horaCitaSelected);
+
     this.loadBarbers();
     this.formulario = this.formBuilder.group({
       barbero: ['', [Validators.required]],
@@ -116,11 +120,12 @@ export class BookingFormComponent {
     });
   }
 
-  async loadSchedule(id: number, day: Date) {
+  async loadSchedule(id: number, day: String) {
+    console.log('dia en carga de agenda: ' + day);
     try {
       this.horaCitaList = [];
       const data = {
-        timeStart: format(day, "yyyy-MM-dd'T'00:00:00"),
+        timeStart: day,
         barberId: id,
       };
 
@@ -208,7 +213,6 @@ export class BookingFormComponent {
     this.formulario.patchValue({
       cliente: '',
       phone: '',
-      barbero: '',
       horaCita: '',
     });
   }
