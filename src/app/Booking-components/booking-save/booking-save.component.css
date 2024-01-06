@@ -6,15 +6,8 @@
 .tabla {
   margin-bottom: 5em;
   width: 80%;
-  /* border: 1px solid rgba(255, 255, 255, 0.2); */
 }
 
-/* .mat-elevation-z8 tr {
-  background-color: #e14e4e;
-  margin: 100px;
-  padding: 0;
-  
-} */
 .hora {
   background-color: black;
 }
@@ -25,21 +18,18 @@
 }
 .td-detalles {
   display: flex;
-  /* background-color: blue; */
   margin: 0;
   padding: 0;
   height: 2em;
   align-items: center;
-  /* flex-direction: row; */
 }
 .td-optiones {
   display: flex;
-  /* background-color: blue; */
+
   margin: 0;
   padding: 0;
   height: 2em;
   align-items: center;
-  /* flex-direction: row; */
 }
 .td-hora {
   width: 4.5em;
@@ -54,7 +44,7 @@
 }
 .td-cliente {
   display: flex;
-  width: 10em;
+  width: 8em;
   padding: 0.5em 0;
   margin-left: 1em;
 }
@@ -67,15 +57,10 @@ tr.data {
 }
 
 tr.data :hover {
-  /* background-color: aqua; */
-  /* color: aqua; */
-  /* background: whitesmoke; */
-  background-color: rgb(198, 198, 198);
+  background-color: rgb(255, 255, 255);
   color: black;
-  /* opacity: 2.3; */
 }
 
-/* div para el boton de nueva cita*/
 .options {
   width: 80%;
   display: flex;
@@ -128,6 +113,7 @@ tr.data :hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .modal-container {
@@ -174,7 +160,7 @@ tr.data :hover {
   th {
     /* background-color: aqua; */
     /* color: aqua; */
-    font-size: small;
+    font-size: smaller;
   }
   .td-hora {
     font-size: smaller;

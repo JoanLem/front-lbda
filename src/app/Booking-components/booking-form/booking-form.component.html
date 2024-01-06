@@ -7,17 +7,18 @@
     <mat-divider></mat-divider>
     <br />
     <mat-card-content>
-      <form *ngIf="!flatAlerta" [formGroup]="formulario" (ngSubmit)="crearCita()">
+      <form *ngIf="!flatAlerta" [formGroup]="formulario" (ngSubmit)="saveAppointment()">
         <!-- Select para el barbero -->
         <mat-card-subtitle>1. Seleccione el barbero</mat-card-subtitle>
         <section class="select-barber">
           <mat-form-field>
             <mat-label>Seleccione Barbero</mat-label>
-            <mat-select formControlName="barbero">
-              <!-- <mat-option [value]="0">Cualquier barbero</mat-option>  -->
-              <mat-option *ngFor="let barber of barberList" [value]="barber">{{
-                barber.name
-                }}</mat-option>
+            <mat-select formControlName="barbero" [(value)]="barberSelected">
+              <!-- <mat-option *ngIf="appointmentDetails" [value]="barberSelected">{{barberSelected.name}}</mat-option> -->
+              <mat-option *ngFor="let barber of barberList" [value]="barber">
+                {{ barber.name }}
+              </mat-option>
+
             </mat-select>
 
             <mat-error *ngIf="formulario.controls['barbero'].hasError('required')">

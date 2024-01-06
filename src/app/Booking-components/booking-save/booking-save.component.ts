@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,13 +24,7 @@ import { BookingFormComponent } from '../booking-form/booking-form.component';
 import { LoaderComponent } from '../../loader/loader.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogTitle,
-} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../../modal/modal.component';
 
 @Component({
@@ -67,17 +61,22 @@ export class BookingSaveComponent {
   filtro: FormGroup;
   barberList: any[] = [];
   daySelected = format(new Date(), 'yyyy-MM-dd');
-  displayedColumns: string[] = ['hora'];
+  displayedColumns: string[] = ['hora', 'opciones'];
   barberSelected = 0;
+  clientSelected = '';
+  //envio de registro para formulario de agenda
+  // @Input() appointmentList: any[];
+  @Output() editarRegistro = new EventEmitter<any>();
 
   idActualizar: number | undefined;
   idEliminar: number | undefined;
+  appointmentDetails: any;
 
   // parametos tabla
   appointmentList: any[] = [];
 
   loading = true;
-  modal = false;
+  isModalOpen = false;
 
   constructor(private formBuilder: FormBuilder, public dialog: MatDialog) {
     this.filtro = this.formBuilder.group({
@@ -130,26 +129,19 @@ export class BookingSaveComponent {
     }
   }
 
-  async updateData(cita: any) {
-    if (cita.id !== undefined) {
-      const updatedDato = {
-        barberId: cita.barber.id,
-        timeStart: cita.timeStart,
-        client: {
-          name: cita.client.name,
-          phone: cita.client.phone,
-        },
-      };
-
-      try {
-        this.modal = true;
-        //await this.appoitmentService.updateData(updatedDato);
-        // Actualizar la lista de datos después de la actualización
-        //await this.loadData();
-      } catch (error) {
-        console.error('Error al actualizar dato:', error);
-      }
-    }
+  /**
+   * Actualizar Appointment
+   */
+  updateData(appointmentDetails: any): void {
+    this.isModalOpen = true;
+    this.appointmentDetails = {
+      id: appointmentDetails.id,
+      barber: appointmentDetails.barber,
+      timeStart: appointmentDetails.timeStart,
+      client: appointmentDetails.client,
+    };
+    console.info('Abrimos modal editar');
+    console.log(appointmentDetails);
   }
 
   async deleteData(idEliminar: number) {
@@ -164,10 +156,13 @@ export class BookingSaveComponent {
     }
   }
   modalNuevaCita() {
-    //this.dialog.open(BookingFormComponent);
-    this.modal = true;
+    this.isModalOpen = true;
+    console.info('Abrimos modal');
   }
-  cerrarModal() {
-    this.modal = false;
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.appointmentDetails = undefined;
+    console.info('Cerramos modal');
   }
 }
