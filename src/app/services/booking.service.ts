@@ -86,8 +86,8 @@ export class BookingService {
 
   // >>>>>>>>>>>>  Metodo updateData un registro
 
-  async updateData(updatedData: any): Promise<any> {
-    const url = `${this.apiUrl}`;
+  async updateData(updatedData: any, idActualizar: number): Promise<any> {
+    const url = `${this.apiUrl}/` + idActualizar;
     const response = await fetch(url, {
       method: 'PUT',
       headers: {
