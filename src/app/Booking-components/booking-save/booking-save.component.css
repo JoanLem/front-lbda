@@ -42,7 +42,7 @@
   /* flex-direction: row; */
 }
 .td-hora {
-  width: 4em;
+  width: 4.5em;
   padding: 0.5em 0;
 }
 .td-barbero {
@@ -50,12 +50,13 @@
   justify-content: center;
   width: 8em;
   padding: 0.5em;
+  margin-left: 1em;
 }
 .td-cliente {
   display: flex;
   width: 10em;
   padding: 0.5em 0;
-  justify-content: center;
+  margin-left: 1em;
 }
 
 tr.data {
@@ -63,17 +64,15 @@ tr.data {
   margin: 0;
   padding: 0;
   height: 3em;
-  /* background-color: aqua; */
-  /* color: aqua; */
-  /* background: whitesmoke; */
-  /* opacity: 0.5; */
 }
 
 tr.data :hover {
   /* background-color: aqua; */
   /* color: aqua; */
   /* background: whitesmoke; */
-  opacity: 0.5;
+  background-color: rgb(198, 198, 198);
+  color: black;
+  /* opacity: 2.3; */
 }
 
 /* div para el boton de nueva cita*/
@@ -176,6 +175,9 @@ tr.data :hover {
     /* background-color: aqua; */
     /* color: aqua; */
     font-size: small;
+  }
+  .td-hora {
+    font-size: smaller;
   }
 
   .td-optiones {

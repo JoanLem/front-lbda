@@ -72,7 +72,7 @@ export class BookingFormComponent {
 
   constructor(private formBuilder: FormBuilder) {
     console.log('barbero seleccionado: ' + this.barberSelected);
-    console.log('hora seleccionada: ' + this.horaCitaSelected);
+    console.log('hora seleccionada: ' + this.daySelected);
 
     this.loadBarbers();
     this.formulario = this.formBuilder.group({
@@ -94,14 +94,18 @@ export class BookingFormComponent {
     // Escuchar cambios en el FormControl 'barbero'
     this.formulario.get('barbero')?.valueChanges.subscribe((value) => {
       if (value !== '') {
+        console.log('dia desde eveto barbero: ' + this.daySelected);
         this.barberSelected = value;
         this.loadSchedule(this.barberSelected.id, this.daySelected);
       }
     });
     // Escuchar cambios en el FormControl 'daySelected'
     this.formulario.get('daySelected')?.valueChanges.subscribe((value) => {
-      this.daySelected = value;
-      this.loadSchedule(this.barberSelected.id, this.daySelected);
+      if (value != null && this.barberSelected !== '') {
+        console.log('dia desde eveto dayselected: ' + this.daySelected);
+        this.daySelected = value;
+        this.loadSchedule(this.barberSelected.id, this.daySelected);
+      }
     });
     // Escuchar cambios en el FormControl 'horaCita'
     this.formulario.get('horaCita')?.valueChanges.subscribe((value) => {
@@ -121,7 +125,8 @@ export class BookingFormComponent {
   }
 
   async loadSchedule(id: number, day: String) {
-    console.log('dia en carga de agenda: ' + day);
+    console.log('dia en carga de loadSchedule: ' + day);
+    console.log('daySelected desde loadSchedule: ' + this.daySelected);
     try {
       this.horaCitaList = [];
       const data = {
@@ -210,10 +215,13 @@ export class BookingFormComponent {
     this.flatAlerta = false;
     this.titulo = 'Agendar cita';
     this.barberSelected = '';
-    this.formulario.patchValue({
+    console.log('dia desd cerrar detalle: ' + this.daySelected);
+    this.formulario.reset({
       cliente: '',
       phone: '',
+      daySelected: this.daySelected,
       horaCita: '',
+      barbero: '',
     });
   }
 
