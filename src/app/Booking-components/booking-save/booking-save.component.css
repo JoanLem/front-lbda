@@ -63,11 +63,20 @@ tr.data :hover {
 
 .options {
   width: 80%;
+  /* background-color: antiquewhite; */
   display: flex;
   justify-content: flex-end;
   margin-bottom: 1em;
 }
+.options button {
+  /* height: 70%; */
+  /* background-color: blue; */
+  margin: 0 0.5em;
+}
 
+.options mat-icon {
+  font-size: large;
+}
 /*estilos para el filtro*/
 
 .filter-container {
@@ -86,27 +95,25 @@ tr.data :hover {
 }
 
 .filter-container form {
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .filter-container form > * {
   margin: 12px 0;
 }
 
-.filter-container .mat-radio-button {
-  margin: 0 12px;
-}
-
 .example-form-fields {
   display: flex;
   align-items: flex-start;
+  font-size: 10px;
 }
 
 /* modal.component.css */
 .modal-overlay {
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
+  margin: 0 auto;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
@@ -177,5 +184,11 @@ tr.data :hover {
   .example-form-fields {
     align-items: center;
     flex-direction: column;
+  }
+
+  .modal-container {
+    /* background-color: #ca2020d2; */
+    padding: 1em;
+    width: 100%;
   }
 }

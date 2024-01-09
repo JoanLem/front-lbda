@@ -140,8 +140,6 @@ export class BookingSaveComponent {
       timeStart: appointmentDetails.timeStart,
       client: appointmentDetails.client,
     };
-    console.info('Abrimos modal editar');
-    console.log(appointmentDetails);
   }
 
   async deleteData(idEliminar: number) {
@@ -157,12 +155,12 @@ export class BookingSaveComponent {
   }
   modalNuevaCita() {
     this.isModalOpen = true;
-    console.info('Abrimos modal');
+    //console.info('Abrimos modal');
   }
 
   closeModal() {
     this.isModalOpen = false;
     this.appointmentDetails = undefined;
-    console.info('Cerramos modal');
+    //console.info('Cerramos modal');
   }
 }

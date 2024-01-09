@@ -1,48 +1,24 @@
 <div *ngIf="loading"><app-loader></app-loader></div>
 <div *ngIf="!loading" class="main-container">
-  <!-- Otro componente o template donde quieras usar la modal -->
-  <!-- <div *ngIf="modal" class="modal-overlay">
-    <div class="modal-container">
-      <div class="modal-header">
-        <app-booking-form [data]="barberList" />
-        <button (click)="cerrarModal()">cerrar</button>
-      </div>
-      <div class="modal-body">
-        <app-booking-form></app-booking-form>
-        <ng-content></ng-content>
-      </div>
-    </div>
-  </div> -->
-  <!-- <app-booking-form *ngIf="modal"></app-booking-form> -->
 
   <div *ngIf="isModalOpen" class="modal-overlay">
     <div class="modal-container">
       <div class="modal-body">
-        <!-- @if (idActualizar ) {
-        {{idActualizar}}
-        {{barberSelected }} {{ daySelected }} {{clientSelected}}
-
-        }@else{
-        usuario nuevo
-        } -->
-        <app-booking-form [appointmentDetails]="appointmentDetails"></app-booking-form>
         <button (click)="closeModal()">Close</button>
+        <app-booking-form [appointmentDetails]="appointmentDetails">
+        </app-booking-form>
       </div>
-
     </div>
-
   </div>
 
 
   <!-- filtro para tabla -->
+
+
   <div class="filter-container">
     <form [formGroup]="filtro" (ngSubmit)="loadData()">
       <div>
         <label>Filtro: </label>
-        <!-- <mat-radio-group>
-          <mat-radio-button value="auto">Libre</mat-radio-button>
-          <mat-radio-button value="always">Citas</mat-radio-button>
-        </mat-radio-group> -->
       </div>
 
       <div class="example-form-fields">
@@ -71,8 +47,11 @@
   </div>
 
   <div class="options">
-    <button mat-fab color="accent" (click)="modalNuevaCita()">
-      <mat-icon><i class="fa-sharp fa-solid fa-plus"></i></mat-icon>
+    <button mat-mini-fab color="primary" (click)="loadData()">
+      <mat-icon><i class="fa-solid fa-arrows-rotate"></i> </mat-icon>
+    </button>
+    <button mat-mini-fab color="accent" (click)="modalNuevaCita()">
+      <mat-icon><i class="fa-sharp fa-solid fa-plus"></i> </mat-icon>
     </button>
   </div>
 

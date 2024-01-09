@@ -13,8 +13,8 @@
         <section class="select-barber">
           <mat-form-field>
             <mat-label>Seleccione Barbero</mat-label>
-            <mat-select formControlName="barbero" [(value)]="barberSelected">
-              <!-- <mat-option *ngIf="appointmentDetails" [value]="barberSelected">{{barberSelected.name}}</mat-option> -->
+            <mat-select formControlName="barbero">
+              <mat-option *ngIf="appointmentDetails" [value]="barberSelected">{{barberSelected.name}}</mat-option>
               <mat-option *ngFor="let barber of barberList" [value]="barber">
                 {{ barber.name }}
               </mat-option>
@@ -39,7 +39,8 @@
 
         <!-- Datapicker para la fecha  -->
         <mat-card-subtitle>2. Indicanos el dia y la hora</mat-card-subtitle>
-        <section *ngIf="barberSelected !== ''">
+        <section *ngIf="barberSelected">
+
           <mat-form-field>
             <mat-label>Seleccione un dia</mat-label>
             <input matInput [matDatepicker]="picker" formControlName="daySelected" />
@@ -50,15 +51,18 @@
           <mat-form-field>
             <mat-label>Horas disponibles</mat-label>
             <mat-select formControlName="horaCita">
-              <mat-option *ngFor="let timeReal of horaCitaList" [value]="timeReal">{{ timeReal.timeReal | date :
-                "shortTime" }}
-              </mat-option>
-            </mat-select></mat-form-field>
+              <mat-option *ngIf="appointmentDetails" [value]="horaCitaSelected">
+                {{horaCitaSelected.timeReal | date :"shortTime"}}</mat-option>
+              <mat-option *ngFor="let timeReal of horaCitaList" [value]="timeReal">
+                {{ timeReal.timeReal | date : "shortTime" }} </mat-option>
+            </mat-select>
+          </mat-form-field>
         </section>
 
         <!-- seccion para el datos del cliente -->
         <mat-card-subtitle>3. Tus Datos</mat-card-subtitle>
-        <section *ngIf="horaCitaSelected !== ''">
+        <section *ngIf="horaCitaSelected.timeReal || appointmentDetails">
+
           <mat-form-field>
             <mat-label>WhatsApp / movil </mat-label>
 

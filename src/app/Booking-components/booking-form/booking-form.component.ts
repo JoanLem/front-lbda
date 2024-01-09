@@ -1,4 +1,4 @@
-import { Component, Inject, inject, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -76,40 +76,26 @@ export class BookingFormComponent {
   daySelected = format(this.day, "yyyy-MM-dd'T'00:00:00");
   barberSelected: any = '';
   clientSelected: any = '';
-  numeroWhatsApp = '573196073229'; // Reemplaza con el número de WhatsApp al que deseas enviar mensajes
-  urlWhatsApp = `https://wa.me/${this.numeroWhatsApp}`;
 
   urlImgProfileDefault = `https://elasticbeanstalk-us-east-1-148301147089.s3.amazonaws.com/perfil+default.jpg`;
 
   horaCitaList: any[] = [];
-  horaCitaSelected: any = '';
+  horaCitaSelected: any = {};
 
   idActualizar: number = 0;
 
-  ngOnInit() {
-    if (this.appointmentDetails) {
-      console.log('form component Id a aculaizar es: ');
-      console.log(this.appointmentDetails);
-      this.idActualizar = this.appointmentDetails.id;
-      this.barberSelected = this.appointmentDetails.barber;
-      this.formulario.patchValue({
-        babero: this.appointmentDetails.barber,
-        daySelected: this.appointmentDetails.timeStart,
-        horaCita: this.appointmentDetails.timeStart,
-        cliente: this.appointmentDetails.client.name,
-        phone: this.appointmentDetails.client.phone,
-      });
-    }
-  }
+  /**
+   * Variables para el link de Whatsapp
+   */
+  numeroWhatsApp = '573196073229'; // Reemplaza con el número de WhatsApp al que deseas enviar mensajes
+  urlWhatsApp = `https://wa.me/${this.numeroWhatsApp}`;
+  /********************************************* */
+
   constructor() {
-    console.log(
-      'Id a actualizar en el componente formulario: ' + this.idActualizar
-    );
-    this.loadBarbers();
     this.formulario = new FormGroup({
-      barbero: new FormControl(''),
+      barbero: new FormControl('', Validators.required),
       daySelected: new FormControl(this.daySelected),
-      horaCita: new FormControl(''),
+      horaCita: new FormControl('', Validators.required),
       cliente: new FormControl('', [
         Validators.required,
         Validators.pattern(
@@ -122,19 +108,25 @@ export class BookingFormComponent {
         Validators.pattern('^[0-9]{10}$'),
       ]),
     });
+  }
 
+  listenerForm() {
     // Escuchar cambios en el FormControl 'barbero'
     this.formulario.get('barbero')?.valueChanges.subscribe((value) => {
-      if (value !== '') {
-        console.log('dia desde eveto barbero: ' + this.daySelected);
-        this.barberSelected = value;
-        this.loadSchedule(this.barberSelected.id, this.daySelected);
+      this.barberSelected = value;
+      this.loadSchedule(this.barberSelected.id, this.daySelected);
+      if (value) {
+        if (
+          this.appointmentDetails &&
+          this.appointmentDetails.barber.id != this.barberSelected.id
+        ) {
+          this.formulario.patchValue({ horaCita: '' });
+        }
       }
     });
     // Escuchar cambios en el FormControl 'daySelected'
     this.formulario.get('daySelected')?.valueChanges.subscribe((value) => {
       if (value != null && this.barberSelected !== '') {
-        console.log('dia desde eveto dayselected: ' + this.daySelected);
         this.daySelected = value;
         this.loadSchedule(this.barberSelected.id, this.daySelected);
       }
@@ -218,6 +210,7 @@ export class BookingFormComponent {
 
   async saveAppointment() {
     var appointmentCreated: any = [];
+
     if (this.formulario.valid) {
       const newAppointment = {
         barberId: this.formulario.value.barbero.id,
@@ -227,6 +220,7 @@ export class BookingFormComponent {
           phone: this.formulario.value.phone,
         },
       };
+      //console.log(newAppointment);
       try {
         if (this.appointmentDetails) {
           //Se Actualizara el appointment
@@ -271,5 +265,26 @@ export class BookingFormComponent {
 
   irAWhatsApp(): void {
     window.open(this.urlWhatsApp, '_blank');
+  }
+
+  ngOnInit(): void {
+    this.listenerForm();
+    if (this.barberList.length === 0) {
+      this.loadBarbers();
+    }
+    console.log(this.formulario.value.barbero);
+    if (this.appointmentDetails) {
+      this.idActualizar = this.appointmentDetails.id;
+      this.barberSelected = this.appointmentDetails.barber;
+      this.horaCitaSelected = { timeReal: this.appointmentDetails.timeStart };
+      this.formulario.get('barbero')?.setValue(this.barberSelected);
+      this.formulario.get('horaCita')?.setValue(this.horaCitaSelected);
+      this.formulario.patchValue({
+        cliente: this.appointmentDetails.client.name,
+        phone: this.appointmentDetails.client.phone,
+      });
+    }
+
+    /** invocacion de metodo que escucha cambios del formulario  */
   }
 }
